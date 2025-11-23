@@ -57,7 +57,7 @@ FastAPI Application
 1. Clone the repository
 
 ```bash
-git clone https://github.com/pranavbaburaj/database_with_api.git
+git clone https://github.com/AbdoEldgwy/Multi-Database-Learning-Platform-API.git
 ```
 
 2. Create a `.env` file in the root directory and add the following environment variables:
@@ -88,6 +88,7 @@ docker-compose up -d
 5. Install the dependencies
 
 ```bash
+pip install -r requirements.txt
 ```
 
 ## 6. Future Improvements

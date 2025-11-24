@@ -15,10 +15,10 @@
  5) [Setup Instructions](#setup-instructions)
  6) [Future Improvements](#future-improvements)
  
-## 1. Overview
+## Overview
 by `FastAPI` , This lab project implements a simple Learning Platform Backend API
 
-## 2. Project Features
+## Project Features
 
 - User Authentication and Authorization
 - CRUD Operations on Courses, Topics, and Resources
@@ -26,7 +26,7 @@ by `FastAPI` , This lab project implements a simple Learning Platform Backend AP
 - Cache using Redis
 - Contaiterization using Docker
 
-## 3. Architecture
+## Architecture
 ```bash
 FastAPI Application
 │
@@ -35,7 +35,7 @@ FastAPI Application
 └── Redis     → Caching and Sessions (in-memory)
 ```
 
-## 4. Technologies Used
+## Technologies Used
 
 - Python 
 - FastAPI
@@ -44,15 +44,15 @@ FastAPI Application
 - Redis
 - Docker
 
-## 5. Setup Instructions
+## Setup Instructions
 
-### 5.1 Prerequisites
+### 1- Prerequisites
 
 - Docker
 - Docker Compose
 - Python 3.9+
 
-### 5.2 Running the Application
+### 2- Running the Application
 
 1. Clone the repository
 
@@ -91,6 +91,6 @@ docker-compose up -d
 pip install -r requirements.txt
 ```
 
-## 6. Future Improvements
+## Future Improvements
  - JWT authentication
  - Frontend UI

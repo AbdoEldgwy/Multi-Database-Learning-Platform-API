@@ -1,4 +1,4 @@
-from app.models.user import Base
+from app.models.base import Base
 from app.db.postgres import engine
 
 async def init_db():

@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.db.init_db import init_db
 from app.routers.users import router as user_router
+from app.routers.products import router as product_router
 
 app = FastAPI()
 
@@ -9,6 +10,7 @@ def home():
     return {"message": "API is working!"}
 
 app.include_router(user_router, prefix="/users")
+app.include_router(product_router, prefix="/products")
 
 @app.on_event("startup")
 async def startup_event():

@@ -43,7 +43,7 @@ async def register(user: UserCreate, db: AsyncSession = Depends(get_db)):
     ).returning(User)
     result = await db.execute(stmt)
     await db.commit()
-    print(f'---------:{result}')
+    # print(f'---------:{result}')
 
     new_user = result.scalar_one()
 

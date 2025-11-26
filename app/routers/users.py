@@ -40,10 +40,14 @@ async def register(user: UserCreate, db: AsyncSession = Depends(get_db)):
         name=user.name,
         email=user.email,
         password=hashed_password
-    )
-    await db.execute(stmt)
+    ).returning(User)
+    result = await db.execute(stmt)
     await db.commit()
-    return {"message": "User registered successfully!"}
+    print(f'---------:{result}')
+
+    new_user = result.scalar_one()
+
+    return new_user
 
 
 class UserLogin(BaseModel):
@@ -58,6 +62,6 @@ async def login(user: UserLogin, db: AsyncSession = Depends(get_db)):
     
     if not user_db:
         raise HTTPException(status_code=400, detail="Invalid email or password")
-    print(f"user_db----------: {user_db.password}")
-    if not verify_password(user.password, user_db.password):
+    print(f"user_db----------: {user_db.email}")
+    if not verify_password(user.password, user_db.password): # type: ignore
         raise HTTPException(status_code=400, detail="Invalid email or password")

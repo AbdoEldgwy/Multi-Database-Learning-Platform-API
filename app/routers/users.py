@@ -65,3 +65,24 @@ async def login(user: UserLogin, db: AsyncSession = Depends(get_db)):
     print(f"user_db----------: {user_db.email}")
     if not verify_password(user.password, user_db.password): # type: ignore
         raise HTTPException(status_code=400, detail="Invalid email or password")
+    
+    return {"message": "Login successful"}
+
+
+@router.get("/all", response_model=list[UserResponse])
+async def get_all_users(db: AsyncSession = Depends(get_db)):
+    stmt = select(User)
+    result = await db.execute(stmt)
+    users = result.scalars().all()
+    return users
+
+@router.get("/id/{user_id}", response_model=UserResponse)
+async def get_user(user_id: int, db: AsyncSession = Depends(get_db)):
+    stmt = select(User).where(User.id == user_id)
+    result = await db.execute(stmt)
+    user = result.scalar_one_or_none()
+    
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    return user

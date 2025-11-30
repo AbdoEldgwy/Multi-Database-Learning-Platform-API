@@ -5,7 +5,7 @@ from bson import ObjectId
 
 router = APIRouter()
 
-@router.post("/mongo/products/")
+@router.post("/products")
 async def create_product(product: MongoProduct):
     product_dict = product.model_dump()
     result = await db['products'].insert_one(product_dict) # insert_one returns result with inserted_id "_id"
@@ -13,7 +13,7 @@ async def create_product(product: MongoProduct):
     return product_dict
 
 # --- Get all ---
-@router.get("/mongo/products")
+@router.get("/products")
 async def list_mongo_products():
     products = []
     cursor = db['products'].find()
@@ -24,7 +24,7 @@ async def list_mongo_products():
 
 
 # --- Get one ---
-@router.get("/mongo/products/{product_id}")
+@router.get("/products/{product_id}")
 async def get_mongo_product(product_id: str):
     doc = await db['products'].find_one({"_id": ObjectId(product_id)})
     if not doc:

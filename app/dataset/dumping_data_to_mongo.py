@@ -1,5 +1,5 @@
 import pandas as pd
-from app.models.mongo_product import MongoProduct
+from app.models.mongo_models import MongoProduct
 from app.db.mongo import db
 import asyncio
 

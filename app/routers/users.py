@@ -5,8 +5,14 @@ from app.models.user import User
 from pydantic import BaseModel, EmailStr
 from sqlalchemy import insert, select
 from utils.hashing_pwd import hash_password, verify_password
+from app.logs.Log_it import log_auth
 
 router = APIRouter()
+
+class SessionData():
+    metadata: dict = {"ip": "127.0.0.1", 
+                    "user_agent": "Mozilla/5.0", 
+                    "token": "eyJhbGciOiJIUzI1NiIsInR"} # Example metadata
 
 class UserCreate(BaseModel):
     name: str
@@ -32,6 +38,8 @@ async def register(user: UserCreate, db: AsyncSession = Depends(get_db)):
     existing_user = result.scalar_one_or_none()
     
     if existing_user:
+        action_state = "Failed_registration"
+        await log_auth(user_id=str(existing_user.id), action=action_state, metadata=SessionData.metadata) # type: ignore
         raise HTTPException(status_code=400, detail="Email already registered")
 
     hashed_password = hash_password(user.password)
@@ -43,10 +51,11 @@ async def register(user: UserCreate, db: AsyncSession = Depends(get_db)):
     ).returning(User)
     result = await db.execute(stmt)
     await db.commit()
-    # print(f'---------:{result}')
 
     new_user = result.scalar_one()
-
+    action_state = "Successful_registration"
+    await log_auth(user_id=str(new_user.id), action=action_state, metadata=SessionData.metadata) # type: ignore
+                                                                                   
     return new_user
 
 
